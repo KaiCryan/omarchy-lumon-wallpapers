@@ -1,0 +1,13 @@
+[Unit]
+Description=Cycle to the next wallpaper for the current Omarchy theme
+After=graphical-session.target
+PartOf=graphical-session.target
+# No point cycling a wallpaper nobody can see.
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=oneshot
+# A user service starts with a minimal PATH; omarchy-theme-bg-next shells out
+# to omarchy-theme-bg-set / omarchy-shell by bare name.
+Environment=PATH=/usr/share/omarchy/bin:%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/share/omarchy/bin/omarchy-theme-bg-next

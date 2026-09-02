@@ -1,0 +1,11 @@
+[Unit]
+Description=Cycle the wallpaper every hour
+
+[Timer]
+# Top of every hour. Not Persistent: a tick missed while asleep is
+# irrelevant, the next hour comes around soon enough.
+OnCalendar=hourly
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target
