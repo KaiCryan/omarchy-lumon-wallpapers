@@ -2,8 +2,9 @@
 # Lumon "personnel file" wallpaper for one Severance character.
 #   make-character-wallpaper.sh <portrait.png> <out.jpg> "<name>" "<role>" "<dept>" "<quote>" [sketch]
 # 3840x2160.  A centred ASCII line portrait (photo -> colour-dodge sketch ->
-# glyphs) over the navy ground: LUMON wordmark up top, the character's quote off
-# to the left. (name / role / dept are accepted but not drawn.)
+# glyphs) over the navy ground, sized to fill the frame, with the LUMON wordmark
+# up top.  (name / role / dept / quote are accepted but not drawn -- the desktop
+# has its own rotating quote overlay, so a second one baked in here read as two.)
 #
 # [sketch] = "<blur>,<blackpt>,<whitept>"  (default "6,0%,58%")
 set -euo pipefail
@@ -19,8 +20,8 @@ PLEX=$(_ff 'IBM Plex Sans');   [[ -f $PLEX ]]     || PLEX=$(_ff 'sans-serif')
 MONO=$(_ff 'BlexMono Nerd Font Mono'); [[ -f $MONO ]] || MONO=$(_ff 'monospace')
 RENDER="$(dirname "$0")/_portrait.py"
 COLS=150
-PORTH=1480      # rendered height of the glyph portrait
-PORTY=360       # its top edge (gravity north)
+PORTH=1830     # rendered height of the glyph portrait (fills most of the frame)
+PORTY=220      # its top edge (gravity north)
 TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
 
 # 1. photo -> pencil-sketch line drawing -> ASCII text
@@ -47,14 +48,10 @@ magick -size ${W}x${H} gradient:'#0c1622'-'#16283a' \
   "$TMP/glyph_faded.png" -gravity north -geometry +0+${PORTY} -compose over -composite \
   "$TMP/base.png"
 
-# 4. LUMON wordmark (top, centred) + the quote (left side, vertically centred)
+# 4. LUMON wordmark (top, centred)
 magick "$TMP/base.png" \
   \( -background none -fill '#8fc9e6' -font "$MICHROMA" -pointsize 30 label:'L   U   M   O   N' \) \
      -gravity north -geometry +0+120 -compose over -composite \
-  \( -size 4x200 xc:'#6fb8e3' \) -gravity west -geometry +180+0 -compose over -composite \
-  \( -background none -fill '#d3e6f0' -font "$PLEX" -pointsize 62 -size 820x \
-     -gravity west caption:"“${QUOTE}”" \) \
-     -gravity west -geometry +230+0 -compose over -composite \
   -quality 92 "$OUT"
 
 echo "wrote $OUT"

@@ -12,6 +12,22 @@ mkdir -p "$BGDIR"
 cp wallpapers/*.jpg "$BGDIR/"
 [[ -d quote ]] && cp quote/*.jpg "$BGDIR/" 2>/dev/null || true
 
+# Pull backgrounds we don't want out of the cycle. The plain gradient that ships
+# with the base lumon theme just reads as an empty screen; omarchy-theme-bg-next
+# scans -maxdepth 1, so a subfolder is enough to hide it.
+EXCLUDE=(02-gradient.jpg)
+for d in "$HOME/.local/state/omarchy/current/theme/backgrounds" \
+         "$HOME/.config/omarchy/themes/$THEME/backgrounds"; do
+  [[ -d $d ]] || continue
+  for f in "${EXCLUDE[@]}"; do
+    if [[ -f $d/$f ]]; then
+      mkdir -p "$d/.excluded-from-cycle"
+      mv "$d/$f" "$d/.excluded-from-cycle/"
+      echo "   excluded $f from the cycle ($d)"
+    fi
+  done
+done
+
 echo ":: installing the hourly cycle timer -> $UNITS"
 mkdir -p "$UNITS"
 cp systemd/wallpaper-cycle.service systemd/wallpaper-cycle.timer "$UNITS/"

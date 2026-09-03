@@ -3,3 +3,8 @@ __pycache__/
 *.bak
 *.bak.*
 .DS_Store
+
+# build.sh scratch: portrait crops/sketches, and the stray output dir it makes
+# when OUT_WALLPAPERS is unset (tracked wallpapers live in ../wallpapers)
+characters/portraits/
+characters/wallpapers/
