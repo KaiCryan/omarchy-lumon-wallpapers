@@ -3,11 +3,19 @@
 *Severance* / Lumon Industries wallpapers for [Omarchy](https://omarchy.org),
 plus an hourly cycler.
 
-- **`wallpapers/40`–`45`** — the severed-floor crew as ASCII line portraits
-  (Milchick, Mark, Helly, Dylan, Irving, Kier): "LUMON" up top, a big centred
-  glyph face, the character's quote off to the left. Nothing else.
-- **`wallpapers/10`–`13`** — clean vector-built Lumon brand wallpapers
-  (void / quiet corner / wordmark / glow), 4K.
+- **`wallpapers/40`** — Milchick as an ASCII line portrait: "LUMON" up top, a
+  big centred glyph face. Nothing else.
+- **`wallpapers/13`** — clean vector-built Lumon brand wallpaper (glow), 4K.
+- **`wallpapers/15`** — official *Severance* key art.
+- **`wallpapers/20`–`27`** — real *Severance* stills of the severed floor:
+  corridors, the elevator, the MDR office. See `wallpapers/SOURCES.md`.
+- **`wallpapers/30`** — a real character close-up (Mark), as a photo rather
+  than an ASCII portrait.
+- **`wallpapers/60`** — a real still from outside the severed floor (Mark's
+  outie life).
+- **`wallpapers/70`–`75`** — frames from the stop-motion opening titles
+  sequence: a different, surreal claymation style from the rest of the set.
+  See `wallpapers/SOURCES.md`.
 - **`quote/`** — ten eerie Severance quotes composited onto stills, Lumon-placard
   style.
 
