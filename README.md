@@ -1,5 +1,7 @@
 # omarchy-lumon-wallpapers
 
+> Part of **[Omarchy · Lumon Industries](https://github.com/KaiCryan/omarchy-lumon)** — a whole-system _Severance_ theme for Omarchy. This repo is one piece; the hub links the rest.
+
 *Severance* / Lumon Industries wallpapers for [Omarchy](https://omarchy.org),
 plus an hourly cycler.
 
