@@ -53,6 +53,18 @@ is installed, refreshes its `badge` portraits too.
 greeting repo. `characters/SOURCES.md` lists every headshot's Wikimedia origin —
 used for a personal, non-commercial desktop theme.
 
+## Login theme (optional)
+
+[`login-theme/`](login-theme/) plays the *Severance* main-title theme at login
+and lets it ride into the session, with a pause control in the bar. The audio
+is copyrighted and not included — you supply your own. See
+[`login-theme/README.md`](login-theme/README.md).
+
+```sh
+cd login-theme && ./install.sh
+lumon-login-theme set-audio ~/Music/severance-main-titles.mp3
+```
+
 ## Uninstall
 
 ```sh

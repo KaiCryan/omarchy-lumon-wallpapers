@@ -8,3 +8,13 @@ __pycache__/
 # when OUT_WALLPAPERS is unset (tracked wallpapers live in ../wallpapers)
 characters/portraits/
 characters/wallpapers/
+
+# login-theme: never commit copyrighted audio, even if dropped in the repo dir
+login-theme/**/*.mp3
+login-theme/**/*.m4a
+login-theme/**/*.opus
+login-theme/**/*.ogg
+login-theme/**/*.oga
+login-theme/**/*.flac
+login-theme/**/*.wav
+login-theme/audio/

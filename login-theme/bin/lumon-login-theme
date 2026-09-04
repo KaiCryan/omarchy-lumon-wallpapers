@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+# lumon-login-theme — play the Severance "Main Titles" theme at login, let it
+# ride through into the session, and pause/resume it from the bar or a keybind.
+#
+#   lumon-login-theme login       lock (if configured) + start playback  [autostart]
+#   lumon-login-theme play        start playback now
+#   lumon-login-theme toggle      pause / resume
+#   lumon-login-theme stop        stop
+#   lumon-login-theme status
+#   lumon-login-theme enable | disable      auto-play at login on/off
+#   lumon-login-theme set-audio <file>      install your audio file
+#
+# Playback runs in mpv, which exposes MPRIS on this system — so it also shows
+# in the Omarchy bar's media widget with a working play/pause.
+#
+# Config: ~/.config/omarchy/lumon-login-theme.conf
+
+set -uo pipefail
+
+CONF="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/lumon-login-theme.conf"
+AUDIO_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/lumon"
+SOCK="${XDG_RUNTIME_DIR:-/tmp}/lumon-login-theme.sock"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omarchy"
+DISABLED_FLAG="$STATE_DIR/toggles/lumon-login-theme-disabled"
+
+# ---- config defaults --------------------------------------------------
+VOLUME=65               # mpv volume, 100 = unity
+LOOP=0                  # 1 = repeat until stopped
+LOCK_ON_LOGIN=1         # 1 = drop the Lumon lock screen at session start
+LOGIN_DELAY=1.5         # seconds to wait for the shell before locking
+TITLE="Severance — Main Titles"
+AUDIO=                  # optional explicit path; else $AUDIO_DIR/main-titles.*
+# shellcheck source=/dev/null
+[[ -r "$CONF" ]] && source "$CONF"
+
+find_audio() {
+  [[ -n "$AUDIO" && -f "$AUDIO" ]] && { printf '%s\n' "$AUDIO"; return; }
+  local ext f
+  for ext in mp3 opus m4a ogg oga flac wav; do
+    for f in "$AUDIO_DIR"/main-titles."$ext" "$AUDIO_DIR"/*."$ext"; do
+      [[ -f "$f" ]] && { printf '%s\n' "$f"; return; }
+    done
+  done
+}
+
+ipc() { [[ -S "$SOCK" ]] && printf '%s\n' "$1" | socat - "$SOCK" 2>/dev/null; }
+playing() { ipc '{"command":["get_property","pid"]}' | grep -q '"error":"success"'; }
+
+start() {
+  [[ -e "$DISABLED_FLAG" ]] && { echo "lumon-login-theme: disabled"; return 0; }
+  playing && { echo "lumon-login-theme: already playing"; return 0; }
+  local file; file="$(find_audio)"
+  if [[ -z "$file" ]]; then
+    echo "lumon-login-theme: no audio — drop a file at $AUDIO_DIR/main-titles.mp3" >&2
+    echo "  (or: lumon-login-theme set-audio /path/to/file)" >&2
+    return 1
+  fi
+  rm -f "$SOCK"
+  local loopt=--loop-file=no; [[ "$LOOP" == 1 ]] && loopt=--loop-file=inf
+  setsid -f mpv --no-video --no-terminal --gapless-audio=yes \
+    "$loopt" --volume="$VOLUME" --force-media-title="$TITLE" \
+    --input-ipc-server="$SOCK" "$file" >/dev/null 2>&1
+  echo "lumon-login-theme: playing $(basename "$file")"
+}
+
+case "${1:-}" in
+  login)
+    setsid -f "$0" _login_seq >/dev/null 2>&1 ;;
+  _login_seq)
+    # dormant until an audio file exists — no file, no lock, no ceremony
+    [[ -e "$DISABLED_FLAG" || -z "$(find_audio)" ]] && exit 0
+    sleep "${LOGIN_DELAY:-1.5}"
+    [[ "$LOCK_ON_LOGIN" == 1 ]] && omarchy-system-lock >/dev/null 2>&1
+    sleep 0.8
+    start ;;
+  play|start)      start ;;
+  toggle)          ipc '{"command":["cycle","pause"]}' >/dev/null || echo "not running" ;;
+  pause)           ipc '{"command":["set_property","pause",true]}'  >/dev/null ;;
+  resume|unpause)  ipc '{"command":["set_property","pause",false]}' >/dev/null ;;
+  stop)            ipc '{"command":["quit"]}' >/dev/null; rm -f "$SOCK" ;;
+  status)
+    if playing; then
+      pause=$(ipc '{"command":["get_property","pause"]}' | grep -o '"data":[a-z]*' | cut -d: -f2)
+      echo "playing (paused=${pause:-?})   audio: $(find_audio)"
+    else
+      echo "not running   audio: $(find_audio || echo '(none installed)')"
+    fi
+    [[ -e "$DISABLED_FLAG" ]] && echo "login auto-play: DISABLED" || echo "login auto-play: enabled" ;;
+  enable)   rm -f "$DISABLED_FLAG"; echo "login auto-play enabled" ;;
+  disable)  mkdir -p "$(dirname "$DISABLED_FLAG")"; : > "$DISABLED_FLAG"; echo "login auto-play disabled" ;;
+  set-audio)
+    [[ -f "${2:-}" ]] || { echo "usage: lumon-login-theme set-audio <file>" >&2; exit 1; }
+    mkdir -p "$AUDIO_DIR"
+    cp -v -- "$2" "$AUDIO_DIR/main-titles.${2##*.}" ;;
+  ""|-h|--help)
+    sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//' ;;
+  *)
+    echo "lumon-login-theme: unknown command '$1'" >&2; exit 1 ;;
+esac
