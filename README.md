@@ -29,9 +29,9 @@
 <!-- lumon-media:start -->
 <div align="center">
 
-<img src="docs/wallpaper-showcase.jpg" alt="Mark S., an ASCII line-art portrait wallpaper, with the desktop-quote overlay reading &quot;The remembered man does not decay. — Kier Eagan&quot;" width="720">
+<img src="docs/wallpaper-showcase.jpg" alt="A grid of six wallpapers: the MDR corridor, the crew arriving at the elevator, the wide MDR office, a stop-motion opening-titles frame, Milchick as an ASCII line-art portrait, and the Severance key art" width="900">
 
-<sub>The <code>41-mark</code> portrait wallpaper, with <a href="https://github.com/KaiCryan/omarchy-desktop-quote">omarchy-desktop-quote</a> running alongside it.</sub>
+<sub>A few of the wallpapers in the set — real severed-floor stills, an opening-titles frame, an ASCII portrait, and the key art. Full list in <a href="wallpapers/SOURCES.md"><code>wallpapers/SOURCES.md</code></a>.</sub>
 
 </div>
 <!-- lumon-media:end -->
