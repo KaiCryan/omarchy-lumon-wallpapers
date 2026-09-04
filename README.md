@@ -29,9 +29,9 @@
 <!-- lumon-media:start -->
 <div align="center">
 
-<img src="docs/wallpaper-showcase.jpg" alt="Lumon HQ wallpaper at night, with the desktop-quote overlay reading &quot;Devour feculence. — Kier Eagan&quot;" width="720">
+<img src="docs/wallpaper-showcase.jpg" alt="Mark S., an ASCII line-art portrait wallpaper, with the desktop-quote overlay reading &quot;The remembered man does not decay. — Kier Eagan&quot;" width="720">
 
-<sub>The Lumon HQ wallpaper, with <a href="https://github.com/KaiCryan/omarchy-desktop-quote">omarchy-desktop-quote</a> running alongside it.</sub>
+<sub>The <code>41-mark</code> portrait wallpaper, with <a href="https://github.com/KaiCryan/omarchy-desktop-quote">omarchy-desktop-quote</a> running alongside it.</sub>
 
 </div>
 <!-- lumon-media:end -->
