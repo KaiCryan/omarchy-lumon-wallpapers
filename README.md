@@ -1,4 +1,40 @@
 # omarchy-lumon-wallpapers
+<!-- lumon-voice:head -->
+```
+░▒▓█  L U M O N   I N D U S T R I E S  █▓▒░
+```
+> *The faces of the refiners, so the work need not feel unattended.*
+<!-- /lumon-voice:head -->
+
+<!-- lumon-set:start -->
+> **Part of [Omarchy · Lumon Industries](https://github.com/KaiCryan/omarchy-lumon)** — a whole-system *Severance* theme for Omarchy.
+
+<details><summary><strong>The full set</strong></summary>
+
+| Repo | |
+|---|---|
+| [omarchy-lumon](https://github.com/KaiCryan/omarchy-lumon) | **the hub** — install everything, screenshots, the whole pitch |
+| [omarchy-lumon-boot](https://github.com/KaiCryan/omarchy-lumon-boot) | Plymouth boot splash — Lumon globe, matching LUKS prompt |
+| [omarchy-lumon-lock](https://github.com/KaiCryan/omarchy-lumon-lock) | lock screen — prompts *“Enter your access code”* |
+| [omarchy-lumon-greeting](https://github.com/KaiCryan/omarchy-lumon-greeting) | terminal greeting — 19 animations, then `fastfetch` |
+| **omarchy-lumon-wallpapers** | ASCII crew portraits + 4K brand set, hourly cycler &nbsp;·&nbsp; ← you are here |
+| [omarchy-lumon-screensaver](https://github.com/KaiCryan/omarchy-lumon-screensaver) | capped-fps `ttfx` effects + an ambient scene reel |
+| [omarchy-lumon-theme](https://github.com/KaiCryan/omarchy-lumon-theme) | colour scheme, Hyprland look’n’feel, `fastfetch` + about branding |
+| [omarchy-desktop-quote](https://github.com/KaiCryan/omarchy-desktop-quote) | a rotating quote placard over the wallpaper |
+| [omarchy-lumon-assets](https://github.com/KaiCryan/omarchy-lumon-assets) | shared ASCII art, fonts and build tools |
+
+</details>
+<!-- lumon-set:end -->
+
+<!-- lumon-media:start -->
+<div align="center">
+
+<img src="docs/wallpaper-showcase.jpg" alt="Mark S., an ASCII line-art portrait wallpaper, with the desktop-quote overlay reading &quot;The remembered man does not decay. — Kier Eagan&quot;" width="720">
+
+<sub>The <code>41-mark</code> portrait wallpaper, with <a href="https://github.com/KaiCryan/omarchy-desktop-quote">omarchy-desktop-quote</a> running alongside it.</sub>
+
+</div>
+<!-- lumon-media:end -->
 
 *Severance* / Lumon Industries wallpapers for [Omarchy](https://omarchy.org),
 plus an hourly cycler.
@@ -83,3 +119,14 @@ lumon-login-theme set-audio ~/Music/severance-main-titles.mp3
 
 ImageMagick, and the fonts Michroma / IBM Plex Sans / a mono Nerd Font
 (resolved through `fontconfig`; falls back to generic families).
+
+---
+
+<div align="center"><sub>
+
+*The work is mysterious and important.*
+
+Part of [Omarchy · Lumon Industries](https://github.com/KaiCryan/omarchy-lumon) · a personal, non-commercial *Severance* tribute · not affiliated with Apple TV+
+
+</sub></div>
+<!-- lumon-voice:footer -->
