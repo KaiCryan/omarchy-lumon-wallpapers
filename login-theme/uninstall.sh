@@ -23,6 +23,8 @@ strip_block() {
 }
 
 "$BIN/lumon-login-theme" stop 2>/dev/null || true
+# kill the unlock watcher (holds a flock on this file)
+fuser -k "${XDG_RUNTIME_DIR:-/tmp}/lumon-login-theme-watch.lock" 2>/dev/null || true
 [[ -L "$BIN/lumon-login-theme" || -f "$BIN/lumon-login-theme" ]] && { rm -f "$BIN/lumon-login-theme"; say "removed $BIN/lumon-login-theme"; }
 
 strip_block "$CONFIG/hypr/autostart.lua" "--"

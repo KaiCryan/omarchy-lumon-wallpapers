@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Install the Lumon login theme: symlink the script, add the keybind + the
-# lock-and-play autostart. Idempotent. Undo with ./uninstall.sh
+# Install the Lumon login theme: symlink the script, add the autostart block
+# that starts the unlock watcher. Idempotent. Undo with ./uninstall.sh
 #
 # You still need to supply the audio yourself (it is copyrighted — see README):
 #   lumon-login-theme set-audio ~/Music/severance-main-titles.mp3
@@ -49,7 +49,7 @@ fi
 mkdir -p "$CONFIG/omarchy/lumon"
 
 inject_block "$CONFIG/hypr/autostart.lua" "--" "$(cat hypr/autostart.snippet.lua)"
-say "injected the lock-and-play autostart block"
+say "injected the autostart block (unlock watcher + boot lock)"
 # No keybind is injected: mpv exposes MPRIS on this system, so the bar media
 # widget and the XF86AudioPlay key already pause/resume it. To add a hotkey,
 # put this in ~/.config/hypr/bindings.lua (pick a free chord):
@@ -67,4 +67,4 @@ if [[ -z "$(cd "$CONFIG/omarchy/lumon" && ls 2>/dev/null)" ]]; then
   echo "  lumon-login-theme set-audio /path/to/severance-main-titles.mp3"
 fi
 echo "Test now:  lumon-login-theme play    (pause from the bar media widget)"
-echo "It will score the lock screen at your next login."
+echo "Unlock-triggered playback starts working at your next login."

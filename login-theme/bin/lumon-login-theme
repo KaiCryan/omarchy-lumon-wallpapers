@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-# lumon-login-theme — play the Severance "Main Titles" theme at login, let it
-# ride through into the session, and pause/resume it from the bar or a keybind.
+# lumon-login-theme — play the Severance "Main Titles" theme every time you
+# unlock the screen (cold login included), let it ride into the session, and
+# pause it from the bar media widget.
 #
-#   lumon-login-theme login       lock (if configured) + start playback  [autostart]
-#   lumon-login-theme play        start playback now
-#   lumon-login-theme toggle      pause / resume
-#   lumon-login-theme stop        stop
+#   lumon-login-theme login     start the unlock watcher + lock on boot  [autostart]
+#   lumon-login-theme watch     the unlock watcher loop (run by `login`)
+#   lumon-login-theme play      start playback now
+#   lumon-login-theme toggle    pause / resume
+#   lumon-login-theme stop      stop playback
 #   lumon-login-theme status
-#   lumon-login-theme enable | disable      auto-play at login on/off
+#   lumon-login-theme enable | disable      unlock auto-play on / off
 #   lumon-login-theme set-audio <file>      install your audio file
 #
 # Playback runs in mpv, which exposes MPRIS on this system — so it also shows
@@ -20,6 +22,8 @@ set -uo pipefail
 CONF="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/lumon-login-theme.conf"
 AUDIO_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/lumon"
 SOCK="${XDG_RUNTIME_DIR:-/tmp}/lumon-login-theme.sock"
+WATCH_LOCK="${XDG_RUNTIME_DIR:-/tmp}/lumon-login-theme-watch.lock"
+LAST_PLAY="${XDG_RUNTIME_DIR:-/tmp}/lumon-login-theme.last"
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omarchy"
 DISABLED_FLAG="$STATE_DIR/toggles/lumon-login-theme-disabled"
 
@@ -28,6 +32,7 @@ VOLUME=65               # mpv volume, 100 = unity
 LOOP=0                  # 1 = repeat until stopped
 LOCK_ON_LOGIN=1         # 1 = drop the Lumon lock screen at session start
 LOGIN_DELAY=1.5         # seconds to wait for the shell before locking
+RETRIGGER_DEBOUNCE=8    # min seconds between unlock-triggered plays
 TITLE="Severance — Main Titles"
 AUDIO=                  # optional explicit path; else $AUDIO_DIR/main-titles.*
 # shellcheck source=/dev/null
@@ -63,16 +68,48 @@ start() {
   echo "lumon-login-theme: playing $(basename "$file")"
 }
 
+# restart from the top — used on every unlock so the swell is always fresh
+retrigger() {
+  [[ -e "$DISABLED_FLAG" || -z "$(find_audio)" ]] && return 0
+  local now last
+  now=$(date +%s)
+  last=$(cat "$LAST_PLAY" 2>/dev/null || echo 0)
+  (( now - last < ${RETRIGGER_DEBOUNCE:-8} )) && return 0
+  echo "$now" > "$LAST_PLAY"
+  if playing; then
+    ipc '{"command":["quit"]}' >/dev/null 2>&1
+    for _ in $(seq 12); do playing || break; sleep 0.15; done
+  fi
+  rm -f "$SOCK"
+  start
+}
+
 case "${1:-}" in
   login)
-    setsid -f "$0" _login_seq >/dev/null 2>&1 ;;
-  _login_seq)
-    # dormant until an audio file exists — no file, no lock, no ceremony
+    # start (or re-affirm) the unlock watcher
+    setsid -f "$0" watch >/dev/null 2>&1
+    # cold-boot ceremony: lock so the first unlock fires the theme
     [[ -e "$DISABLED_FLAG" || -z "$(find_audio)" ]] && exit 0
+    [[ "${LOCK_ON_LOGIN:-1}" == 1 ]] && setsid -f "$0" _lock_after >/dev/null 2>&1 ;;
+  _lock_after)
     sleep "${LOGIN_DELAY:-1.5}"
-    [[ "$LOCK_ON_LOGIN" == 1 ]] && omarchy-system-lock >/dev/null 2>&1
-    sleep 0.8
-    start ;;
+    omarchy-system-lock >/dev/null 2>&1 ;;
+  watch)
+    exec 8>"$WATCH_LOCK"
+    flock -n 8 || exit 0
+    command -v omarchy-hyprland-session-locked >/dev/null || {
+      echo "lumon-login-theme: omarchy-hyprland-session-locked missing — watcher off" >&2; exit 0; }
+    was=""
+    while sleep 2; do
+      omarchy-hyprland-session-locked; rc=$?
+      case $rc in
+        0) now=locked ;;
+        1) now=unlocked ;;
+        *) continue ;;   # undetermined — hold previous state
+      esac
+      [[ "$was" == locked && "$now" == unlocked ]] && retrigger
+      was="$now"
+    done ;;
   play|start)      start ;;
   toggle)          ipc '{"command":["cycle","pause"]}' >/dev/null || echo "not running" ;;
   pause)           ipc '{"command":["set_property","pause",true]}'  >/dev/null ;;
@@ -85,15 +122,16 @@ case "${1:-}" in
     else
       echo "not running   audio: $(find_audio || echo '(none installed)')"
     fi
-    [[ -e "$DISABLED_FLAG" ]] && echo "login auto-play: DISABLED" || echo "login auto-play: enabled" ;;
-  enable)   rm -f "$DISABLED_FLAG"; echo "login auto-play enabled" ;;
-  disable)  mkdir -p "$(dirname "$DISABLED_FLAG")"; : > "$DISABLED_FLAG"; echo "login auto-play disabled" ;;
+    flock -n "$WATCH_LOCK" true 2>/dev/null && echo "unlock watcher: NOT running" || echo "unlock watcher: running"
+    [[ -e "$DISABLED_FLAG" ]] && echo "unlock auto-play: DISABLED" || echo "unlock auto-play: enabled" ;;
+  enable)   rm -f "$DISABLED_FLAG"; echo "unlock auto-play enabled" ;;
+  disable)  mkdir -p "$(dirname "$DISABLED_FLAG")"; : > "$DISABLED_FLAG"; echo "unlock auto-play disabled" ;;
   set-audio)
     [[ -f "${2:-}" ]] || { echo "usage: lumon-login-theme set-audio <file>" >&2; exit 1; }
     mkdir -p "$AUDIO_DIR"
     cp -v -- "$2" "$AUDIO_DIR/main-titles.${2##*.}" ;;
   ""|-h|--help)
-    sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//' ;;
+    sed -n '2,21p' "$0" | sed 's/^# \{0,1\}//' ;;
   *)
     echo "lumon-login-theme: unknown command '$1'" >&2; exit 1 ;;
 esac
