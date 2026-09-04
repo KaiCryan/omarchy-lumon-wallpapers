@@ -1,4 +1,10 @@
 # omarchy-lumon-wallpapers
+<!-- lumon-voice:head -->
+```
+░▒▓█  L U M O N   I N D U S T R I E S  █▓▒░
+```
+> *The faces of the refiners, so the work need not feel unattended.*
+<!-- /lumon-voice:head -->
 
 <!-- lumon-set:start -->
 > **Part of [Omarchy · Lumon Industries](https://github.com/KaiCryan/omarchy-lumon)** — a whole-system *Severance* theme for Omarchy.
@@ -95,3 +101,14 @@ lumon-login-theme set-audio ~/Music/severance-main-titles.mp3
 
 ImageMagick, and the fonts Michroma / IBM Plex Sans / a mono Nerd Font
 (resolved through `fontconfig`; falls back to generic families).
+
+---
+
+<div align="center"><sub>
+
+*The work is mysterious and important.*
+
+Part of [Omarchy · Lumon Industries](https://github.com/KaiCryan/omarchy-lumon) · a personal, non-commercial *Severance* tribute · not affiliated with Apple TV+
+
+</sub></div>
+<!-- lumon-voice:footer -->
