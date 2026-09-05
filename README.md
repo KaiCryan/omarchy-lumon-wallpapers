@@ -50,8 +50,12 @@ plus an hourly cycler.
 - **`wallpapers/70`–`75`** — frames from the stop-motion opening titles
   sequence: a different, surreal claymation style from the rest of the set.
   See `wallpapers/SOURCES.md`.
-- **`quote/`** — ten eerie Severance quotes composited onto stills, Lumon-placard
-  style.
+- **`wallpapers/80`–`87`** — eight more real stills, text-free (see below).
+- **`quote/`** — `make-quote-wallpaper.sh` composites an eerie Severance quote
+  onto a still, Lumon-placard style, if you want to build your own. Not part
+  of the live rotation — the [omarchy-desktop-quote](https://github.com/KaiCryan/omarchy-desktop-quote)
+  plugin already draws a live quote over whatever wallpaper is showing, so a
+  second one baked into the image just meant two quotes at once.
 
 ## Install
 

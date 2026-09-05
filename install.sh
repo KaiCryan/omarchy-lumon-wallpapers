@@ -10,7 +10,6 @@ UNITS="$HOME/.config/systemd/user"
 echo ":: copying wallpapers -> $BGDIR"
 mkdir -p "$BGDIR"
 cp wallpapers/*.jpg "$BGDIR/"
-[[ -d quote ]] && cp quote/*.jpg "$BGDIR/" 2>/dev/null || true
 
 # Pull backgrounds we don't want out of the cycle: the plain gradient that ships
 # with the base lumon theme reads as an empty screen, and 05 is Omarchy-branded
