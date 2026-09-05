@@ -1,7 +1,6 @@
 # Wallpaper sources
 
-`13` is original vector work; `40` is built from a Wikimedia Commons headshot
-(see `characters/SOURCES.md`). Everything else below is real — actual frames
+`13` is original vector work. Everything else below is real — actual frames
 or official key art from *Severance* (Apple TV+). Used here for a personal,
 non-commercial desktop theme, not redistribution of the broadcast.
 

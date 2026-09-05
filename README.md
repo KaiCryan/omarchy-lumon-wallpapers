@@ -17,7 +17,7 @@
 | [omarchy-lumon-boot](https://github.com/KaiCryan/omarchy-lumon-boot) | Plymouth boot splash — Lumon globe, matching LUKS prompt |
 | [omarchy-lumon-lock](https://github.com/KaiCryan/omarchy-lumon-lock) | lock screen — prompts *“Enter your access code”* |
 | [omarchy-lumon-greeting](https://github.com/KaiCryan/omarchy-lumon-greeting) | terminal greeting — 19 animations, then `fastfetch` |
-| **omarchy-lumon-wallpapers** | ASCII crew portraits + 4K brand set, hourly cycler &nbsp;·&nbsp; ← you are here |
+| **omarchy-lumon-wallpapers** | real severed-floor stills, opening-titles frames + 4K brand set, hourly cycler &nbsp;·&nbsp; ← you are here |
 | [omarchy-lumon-screensaver](https://github.com/KaiCryan/omarchy-lumon-screensaver) | capped-fps `ttfx` effects + an ambient scene reel |
 | [omarchy-lumon-theme](https://github.com/KaiCryan/omarchy-lumon-theme) | colour scheme, Hyprland look’n’feel, `fastfetch` + about branding |
 | [omarchy-desktop-quote](https://github.com/KaiCryan/omarchy-desktop-quote) | a rotating quote placard over the wallpaper |
@@ -29,9 +29,9 @@
 <!-- lumon-media:start -->
 <div align="center">
 
-<img src="docs/wallpaper-showcase.jpg" alt="A grid of six wallpapers: the MDR corridor, the crew arriving at the elevator, the wide MDR office, a stop-motion opening-titles frame, Milchick as an ASCII line-art portrait, and the Severance key art" width="900">
+<img src="docs/wallpaper-showcase.jpg" alt="A grid of six wallpapers: the MDR corridor, the crew arriving at the elevator, the wide MDR office, a stop-motion opening-titles frame, the payphone still, and the Severance key art" width="900">
 
-<sub>A few of the wallpapers in the set — real severed-floor stills, an opening-titles frame, an ASCII portrait, and the key art. Full list in <a href="wallpapers/SOURCES.md"><code>wallpapers/SOURCES.md</code></a>.</sub>
+<sub>A few of the wallpapers in the set — real severed-floor stills, an opening-titles frame, and the key art. Full list in <a href="wallpapers/SOURCES.md"><code>wallpapers/SOURCES.md</code></a>.</sub>
 
 </div>
 <!-- lumon-media:end -->
@@ -39,8 +39,6 @@
 *Severance* / Lumon Industries wallpapers for [Omarchy](https://omarchy.org),
 plus an hourly cycler.
 
-- **`wallpapers/40`** — Milchick as an ASCII line portrait: "LUMON" up top, a
-  big centred glyph face. Nothing else.
 - **`wallpapers/13`** — clean vector-built Lumon brand wallpaper (glow), 4K.
 - **`wallpapers/15`** — official *Severance* key art.
 - **`wallpapers/20`–`27`** — real *Severance* stills of the severed floor:
