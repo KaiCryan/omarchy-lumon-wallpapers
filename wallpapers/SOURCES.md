@@ -24,23 +24,23 @@ non-commercial desktop theme, not redistribution of the broadcast.
 | `74-titles-elevator-shaft.jpg` | Stop-motion titles: a lone figure at the end of a dark elevator shaft | provided directly by the repo owner |
 | `75-titles-office-fire.jpg`  | Stop-motion titles: a figure ablaze atop a desk, retro TV framing | provided directly by the repo owner |
 | `80-enjoy-equally.jpg`       | The photo-day scene in the file room                             | originally `quote/21-enjoy-equally.jpg`, quote text removed |
-| `81-handshake.jpg`           | Dim elevator/hallway close-up                                    | originally `quote/22-handshake.jpg`, quote text removed |
-| `82-merry-humor.jpg`         | Dylan reading a company pamphlet                                 | originally `quote/24-merry-humor.jpg`, quote text removed |
 | `83-a-person.jpg`            | Overhead shot, the conference table                              | originally `quote/25-a-person.jpg`, quote text removed |
 | `84-grow-the-box.jpg`        | Plain navy gradient                                              | originally `quote/26-grow-the-box.jpg`, quote text removed |
 | `85-virgin-meadow.jpg`       | The MDR number-refinement grid                                   | originally `quote/27-virgin-meadow.jpg`, quote text removed |
 | `86-tame-a-prisoner.jpg`     | Lumon HQ, night exterior                                         | originally `quote/28-tame-a-prisoner.jpg`, quote text removed |
 | `87-be-ever-merry.jpg`       | Plain navy with a faint ghosted Lumon globe                      | originally `quote/29-be-ever-merry.jpg`, quote text removed |
 
-`80`–`87` are the `quote/` stills with the baked-in text patched out (mirrored
-a clean strip of the same row-band over the text, since the scrim behind it is
-a purely vertical gradient — same row, same brightness, no visible seam) — the
+`80`–`87` (with gaps) are `quote/` stills with the baked-in text patched out
+(mirrored a clean strip of the same row-band over the text, since the scrim
+behind it is a purely vertical gradient — same row, same brightness) — the
 live [omarchy-desktop-quote](https://github.com/KaiCryan/omarchy-desktop-quote)
 overlay already draws a quote over whatever wallpaper is showing, so the baked-in
-one was just a second, unsynced quote on screen at once. A ninth still from the
-same set, `23-remembered-man`, couldn't be cleaned this way (the text sits across
-the boundary between a subject and the background) and was dropped rather than
-shipped with a visible seam.
+one was just a second, unsynced quote on screen at once. Three of the nine
+originals couldn't be cleaned this way and were dropped rather than shipped
+with a visible seam: `23-remembered-man` (text sits across the boundary between
+a subject and the background), and `22-handshake` / `24-merry-humor` (the
+"clean" strip the patch mirrored in turned out to be his bright shirt collar,
+not open background — only visible once viewed full-screen, not in a thumbnail).
 
 Two more stills from the same drop — a cave/balloon descent and a snowy-parking-lot
 scene — were set aside rather than added: both have an "Emmy Winner" badge and the
